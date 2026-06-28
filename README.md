@@ -9,7 +9,7 @@ A command-line tool for classifying and triaging IT support tickets. The classif
 ## Why this project exists
 
 IT support teams need fast first-pass ticket classification before deeper troubleshooting begins. This project demonstrates a local, dependency-free triage workflow that can classify common support issues, estimate urgency, surface matched terms, and return practical next steps without calling an external AI service.
-\n## Features
+## Features
 
 - **TF-IDF / cosine-similarity scoring** — discriminative term weighting, not raw keyword counts
 - **Crash signal disambiguation** — hardware vs. software tickets resolved cleanly via per-category IDF weights
