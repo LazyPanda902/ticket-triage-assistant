@@ -4,7 +4,12 @@
 
 A command-line tool for classifying and triaging IT support tickets. The classifier uses a **stdlib-only TF-IDF / cosine-similarity** approach: each category has a profile of weighted terms, IDF weights penalise terms shared across categories, and the ticket is scored against every profile via cosine similarity. No external packages are required.
 
-## Features
+
+
+## Why this project exists
+
+IT support teams need fast first-pass ticket classification before deeper troubleshooting begins. This project demonstrates a local, dependency-free triage workflow that can classify common support issues, estimate urgency, surface matched terms, and return practical next steps without calling an external AI service.
+\n## Features
 
 - **TF-IDF / cosine-similarity scoring** — discriminative term weighting, not raw keyword counts
 - **Crash signal disambiguation** — hardware vs. software tickets resolved cleanly via per-category IDF weights
