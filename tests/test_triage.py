@@ -1,21 +1,21 @@
 """Tests for ticket_triage core logic and CLI."""
 
 import json
+
 import pytest
 
+from ticket_triage.cli import _colorize, _render_text, build_parser, main
 from ticket_triage.triage import (
-    triage,
-    TriageResult,
     SAMPLE_TICKETS,
-    _score_category,
-    _score_urgency,
-    _score_cause,
-    _confidence,
-    _tokenize,
+    TriageResult,
     _compute_category_scores,
+    _confidence,
+    _score_category,
+    _score_cause,
+    _score_urgency,
+    _tokenize,
+    triage,
 )
-from ticket_triage.cli import build_parser, main, _render_text, _colorize
-
 
 # ---------------------------------------------------------------------------
 # TriageResult

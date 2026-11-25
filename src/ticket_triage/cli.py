@@ -8,7 +8,7 @@ import sys
 import textwrap
 from collections import Counter
 
-from .triage import triage, SAMPLE_TICKETS, TriageResult
+from .triage import SAMPLE_TICKETS, TriageResult, triage
 
 _URGENCY_COLORS = {
     "critical": "\033[91m",  # bright red
