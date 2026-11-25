@@ -12,10 +12,10 @@ IT support teams need fast first-pass ticket classification before deeper troubl
 ## Features
 
 - **TF-IDF / cosine-similarity scoring** — discriminative term weighting, not raw keyword counts
-- **Crash signal disambiguation** — hardware vs. software tickets resolved cleanly via per-category IDF weights
+- **Crash signal disambiguation** — hardware and software signals weighted differently via per-category IDF weights
 - **Automatic classification** into 8 categories (network, account, security, hardware, software, email, printer, other)
 - **Urgency assessment** (critical / high / medium / low)
-- **Root cause analysis** with likely-cause inference
+- **Likely-cause suggestions** for technician investigation
 - **Troubleshooting guidance** with category-specific steps
 - **Escalation recommendations** for each issue type
 - **Confidence scoring** and matched-term visibility in output
@@ -94,12 +94,12 @@ ticket-triage analyze --ticket "ransomware detected" --no-color
 
 ## How It Works
 
-**Security-first routing** — before cosine scoring is evaluated, the classifier checks the ticket for a set of high-risk terms: `phishing`, `malware`, `ransomware`, `suspicious`, `breach`, `hack`, `hacked`, `unauthorized`, `intrusion`, `infected`, and `compromised`. If any of these terms appear, the ticket is immediately routed to the **security** category regardless of what the cosine scores say. This ensures that phishing attempts, suspicious login events, malware detections, system compromises, and similar incidents are never misclassified into lower-priority queues.
+**Security-first routing** — before cosine scoring is evaluated, the classifier checks the ticket for a set of high-risk terms: `phishing`, `malware`, `ransomware`, `suspicious`, `breach`, `hack`, `hacked`, `unauthorized`, `intrusion`, `infected`, and `compromised`. If any of these terms appear, the ticket is immediately routed to the **security** category regardless of what the cosine scores say. This prioritizes tickets containing recognized high-risk terms. Unrecognized wording, negation, or mixed issues can still cause incorrect routing.
 
 1. **Tokenization** — lowercase the ticket text.
 2. **TF-IDF scoring** — for each category profile, compute term frequency × IDF for every vocabulary term present in the ticket.
 3. **Cosine similarity** — normalise both the ticket vector and the pre-computed category vector, then take their dot product.  The category with the highest similarity wins.
-4. **Crash disambiguation** — `"crash"` is assigned exclusively to the software profile; hardware tickets rely on high-IDF signals like `bsod`, `blue screen`, and `won't turn on`, so hardware and software tickets score clearly without overlap.
+4. **Crash disambiguation** — `"crash"` is assigned exclusively to the software profile; hardware tickets rely on high-IDF signals like `bsod`, `blue screen`, and `won't turn on`, to help distinguish hardware and software tickets; ambiguous input can still be misclassified.
 5. **Urgency and cause** — independent keyword passes over the same lowercased text.
 
 ## Categories and Examples
@@ -137,6 +137,10 @@ ticket-triage analyze --ticket "ransomware detected" --no-color
   }
 ]
 ```
+
+## Limitations
+
+Classification uses predefined term profiles and rules, not a trained incident model. Confidence labels are heuristic, not calibrated probabilities. Suggested causes and urgency require technician review; the tool does not confirm a root cause or automatically change systems.
 
 ## Testing
 
